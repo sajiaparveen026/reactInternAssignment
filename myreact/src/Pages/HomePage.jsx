@@ -35,11 +35,22 @@ const HomePage = () => {
       allowExtraEmails,
     };
 
+    
     // Save user details in local storage
     localStorage.setItem('userDetails', JSON.stringify(userDetails));
 
     // Redirect to the second page
-    navigate('/details');
+    if (
+      firstName.trim() === '' ||
+      lastName.trim() === '' ||
+      phoneNumber.trim() === '' ||
+      email.trim() === ''
+    ) {
+      alert('Please fill in all the form fields before accessing the details page.');
+    } else {
+      navigate('/details');
+    }
+    
   };
 
   const handleNavigate = () => {
@@ -104,20 +115,20 @@ const HomePage = () => {
                 <TextField
                   required
                   fullWidth
-                  name="phonenumber"
+                  name="phoneNumber"
                   label="Phone Number"
                   type="tel"
-                  id="phonenumber"
+                  id="phoneNumber"
                   autoComplete="tel"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
-                  />
-                  </Grid>
-                  <Grid item xs={12}>
-                  <TextField
+                />
+              </Grid>
+              <Grid item xs={12}>
+                <TextField
                   required
                   fullWidth
-                  id="email"
+                  id ="email"
                   label="Email Address"
                   name="email"
                   autoComplete="email"
@@ -127,13 +138,14 @@ const HomePage = () => {
                   </Grid>
                   <Grid item xs={12}>
                   <FormControlLabel
-                  control={<Checkbox value={allowExtraEmails} color="primary" />}
+                  control={<Checkbox checked={allowExtraEmails} color="primary" />}
                   label="I want to receive updates via email."
                   onChange={(e) => setAllowExtraEmails(e.target.checked)}
                   />
                   </Grid>
                   </Grid>
-                  <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
+                  <Button 
+                  type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
                   Submit
                   </Button>
                   </Box>
